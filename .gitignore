@@ -1,1 +1,7 @@
 node_modules
+dist
+build
+
+# Variables d'environnement (ne pas commiter)
+.env
+.env.local

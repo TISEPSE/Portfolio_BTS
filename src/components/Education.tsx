@@ -28,7 +28,7 @@ export function Education() {
 
   return (
     <section id="formations" className="py-24 px-6">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -36,7 +36,11 @@ export function Education() {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <h2 className="mb-4">Mes formations</h2>
+          <div className="w-16 h-0.5 bg-slate-300 mx-auto mb-6"></div>
+          <h2 className="mb-4 text-5xl font-bold tracking-tight">Mes formations</h2>
+          <p className="text-lg text-black/50 max-w-2xl mx-auto">
+            Mon parcours académique et mes formations professionnelles
+          </p>
         </motion.div>
 
         <div className="space-y-8">
@@ -49,27 +53,28 @@ export function Education() {
               viewport={{ once: true }}
               className="relative pl-8 pb-8 border-l-2 border-slate-200 last:pb-0"
             >
-              <div className="absolute -left-[9px] top-0 w-4 h-4 bg-slate-900 rounded-full" />
-              
+              <div className="absolute -left-[9px] top-0 w-4 h-4 bg-slate-900 rounded-full ring-4 ring-white" />
+
               <div className="bg-white p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all">
-                <div className="flex items-start justify-between mb-4 flex-wrap gap-4">
+                <div className="flex items-start justify-between mb-4 flex-wrap gap-3">
                   <div>
-                    <h3 className="mb-2">{formation.title}</h3>
-                    <p className="text-black/60">{formation.institution}</p>
+                    <h3 className="mb-2 text-xl font-semibold">{formation.title}</h3>
+                    <p className="text-sm text-black/60 font-medium">{formation.institution}</p>
                   </div>
-                  <div className="flex items-center gap-2 text-black/60">
+
+                  <div className="flex items-center gap-2 text-black/60 bg-slate-50 px-3 py-1.5 rounded-lg">
                     <Calendar size={16} />
-                    <span>{formation.period}</span>
+                    <span className="text-sm">{formation.period}</span>
                   </div>
                 </div>
-                
-                <p className="mb-6 text-black/70">{formation.description}</p>
-                
+
+                <p className="mb-4 text-sm text-black/70 leading-relaxed">{formation.description}</p>
+
                 <div className="flex flex-wrap gap-2">
                   {formation.skills.map((skill, skillIndex) => (
                     <span
                       key={skillIndex}
-                      className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm"
+                      className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm hover:bg-slate-200 transition-colors"
                     >
                       {skill}
                     </span>
