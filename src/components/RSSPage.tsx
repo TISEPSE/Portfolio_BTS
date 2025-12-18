@@ -121,15 +121,15 @@ export function RSSPage() {
         );
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6 bg-slate-50">
+    <div className="min-h-screen pt-24 pb-16 px-5 sm:px-6 bg-slate-50">
       <div className="max-w-5xl mx-auto">
         {/* Categories Filter */}
-        <div className="mb-8 flex flex-wrap gap-3">
+        <div className="mb-6 sm:mb-8 flex flex-wrap gap-2.5 sm:gap-3">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-lg transition-all ${
+              className={`min-h-[44px] px-4 sm:px-5 py-2.5 rounded-lg transition-all text-sm sm:text-base active:scale-95 ${
                 selectedCategory === category.id
                   ? "bg-slate-900 text-white"
                   : "bg-white border border-slate-300 hover:border-slate-400"
@@ -141,24 +141,24 @@ export function RSSPage() {
         </div>
 
         {/* RSS Feeds List */}
-        <div className="space-y-4">
+        <div className="space-y-4 sm:space-y-5">
           {filteredFeeds.map((feed, index) => (
             <article
               key={index}
-              className="bg-white p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all"
+              className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all"
             >
-              <div className="flex items-start justify-between gap-4 mb-3">
-                <h3 className="flex-1">{feed.title}</h3>
-                <div className="flex items-center gap-2 text-sm text-black/60 whitespace-nowrap">
-                  <Clock size={14} />
+              <div className="flex items-start justify-between gap-3 sm:gap-4 mb-3">
+                <h3 className="flex-1 text-base sm:text-lg font-semibold leading-snug">{feed.title}</h3>
+                <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm text-black/60 whitespace-nowrap shrink-0">
+                  <Clock size={14} className="shrink-0" />
                   <span>{feed.time}</span>
                 </div>
               </div>
 
-              <p className="text-sm text-black/60 mb-3">
+              <p className="text-xs sm:text-sm text-black/60 mb-3 font-medium">
                 {feed.source}
               </p>
-              <p className="text-black/70 mb-4">
+              <p className="text-sm sm:text-base text-black/70 mb-4 sm:mb-5 leading-relaxed">
                 {feed.description}
               </p>
 
@@ -166,10 +166,10 @@ export function RSSPage() {
                 href={feed.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-slate-900 hover:gap-3 transition-all"
+                className="inline-flex items-center gap-2 min-h-[44px] py-2 text-sm sm:text-base text-slate-900 hover:gap-3 active:scale-[0.98] transition-all"
               >
                 <span>Lire l'article</span>
-                <ExternalLink size={16} />
+                <ExternalLink size={16} className="shrink-0" />
               </a>
             </article>
           ))}
@@ -177,8 +177,8 @@ export function RSSPage() {
 
         {/* No results message */}
         {filteredFeeds.length === 0 && (
-          <div className="text-center py-16">
-            <p className="text-black/60">
+          <div className="text-center py-12 sm:py-16">
+            <p className="text-sm sm:text-base text-black/60">
               Aucun article dans cette catégorie pour le moment.
             </p>
           </div>

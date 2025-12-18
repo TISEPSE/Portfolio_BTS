@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Github, ExternalLink, Loader2, AlertCircle } from 'lucide-react';
 import { GitHubProfile } from './GitHubProfile';
+import { motion } from 'motion/react';
 
 // ============================================================================
 // TYPES - Typage strict de l'API GitHub
@@ -144,22 +145,34 @@ export function ProjectsPage() {
   // ============================================================================
 
   return (
-    <div className="min-h-screen pt-24 pb-16 px-6 bg-slate-50">
+    <div className="min-h-screen pt-24 pb-16 px-5 sm:px-6 bg-slate-50">
       <div className="max-w-6xl mx-auto">
         {/* En-tête */}
-        <div className="mb-16 text-center">
-          <div className="w-16 h-0.5 bg-slate-300 mx-auto mb-6"></div>
-          <h1 className="mb-6 text-5xl font-bold tracking-tight">Mes Projets</h1>
-          <p className="text-lg text-black/60 max-w-3xl mx-auto leading-relaxed">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mb-12 sm:mb-16 text-center"
+        >
+          <div className="w-16 h-0.5 bg-slate-300 mx-auto mb-4 sm:mb-6"></div>
+          <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight px-4 sm:px-0">Mes Projets</h1>
+          <p className="text-base sm:text-lg text-black/60 max-w-3xl mx-auto leading-relaxed px-4 sm:px-6">
             Voici une sélection de mes projets sur GitHub. Chaque projet reflète mon parcours
             d'apprentissage et mes compétences en développement web.
           </p>
-        </div>
+        </motion.div>
 
         {/* Profil GitHub complet */}
-        <div className="mb-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true, margin: "-100px" }}
+          className="mb-10 sm:mb-12"
+        >
           <GitHubProfile variant="full" />
-        </div>
+        </motion.div>
 
         {/* État de chargement */}
         {isLoading && (
@@ -196,25 +209,32 @@ export function ProjectsPage() {
         )}
 
         {!isLoading && !error && projects.length > 0 && (
-          <div className="grid md:grid-cols-2 gap-6">
-            {projects.map((project) => (
-              <div
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {projects.map((project, index) => (
+              <motion.div
                 key={project.id}
-                className="bg-white p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: [0.25, 0.1, 0.25, 1]
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-[shadow,border-color] duration-300"
               >
                 {/* Titre du projet */}
-                <h3 className="mb-3 font-semibold text-lg">{project.title}</h3>
+                <h3 className="mb-3 font-semibold text-lg sm:text-xl">{project.title}</h3>
 
                 {/* Description */}
-                <p className="text-black/70 mb-4 line-clamp-3">{project.description}</p>
+                <p className="text-sm sm:text-base text-black/70 mb-4 line-clamp-3 leading-relaxed">{project.description}</p>
 
                 {/* Badges de technologies (topics + language) */}
                 {project.technologies.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-2 mb-5">
                     {project.technologies.map((tech, techIndex) => (
                       <span
                         key={techIndex}
-                        className="px-3 py-1 bg-slate-100 text-slate-700 rounded text-sm"
+                        className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded text-sm"
                       >
                         {tech}
                       </span>
@@ -223,12 +243,12 @@ export function ProjectsPage() {
                 )}
 
                 {/* Liens vers GitHub et démo */}
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 border border-slate-300 rounded-lg hover:bg-slate-900 hover:text-white hover:border-slate-900 transition-all"
+                    className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border border-slate-300 rounded-lg hover:bg-slate-900 hover:text-white hover:border-slate-900 active:scale-[0.98] transition-all text-sm sm:text-base"
                   >
                     <Github size={16} />
                     <span>Code</span>
@@ -238,14 +258,14 @@ export function ProjectsPage() {
                       href={project.demo}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-all"
+                      className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 bg-slate-900 text-white rounded-lg hover:bg-slate-800 active:scale-[0.98] transition-all text-sm sm:text-base"
                     >
                       <ExternalLink size={16} />
                       <span>Démo</span>
                     </a>
                   )}
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         )}
