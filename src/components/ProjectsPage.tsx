@@ -147,14 +147,70 @@ export function ProjectsPage() {
   return (
     <div className="min-h-screen pt-24 pb-16 px-5 sm:px-6 bg-slate-50">
       <div className="max-w-6xl mx-auto">
-        {/* En-tête */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="mb-12 sm:mb-16 text-center"
-        >
+        {/* Contenu principal - masqué pendant le chargement et les erreurs */}
+        {isLoading ? (
+          // État de chargement - version sobre sans rotation
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 bg-white/90 backdrop-blur-sm flex flex-col items-center justify-center z-50"
+          >
+            <div className="mb-6">
+              <Loader2 className="w-16 h-16 text-slate-600" />
+            </div>
+            <motion.p
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="text-xl text-slate-700 font-medium"
+            >
+              Chargement des projets...
+            </motion.p>
+            <motion.p
+              initial={{ y: 10, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="text-slate-500 mt-2 text-center max-w-md px-4"
+            >
+              Récupération des données depuis GitHub...
+            </motion.p>
+          </motion.div>
+        ) : error ? (
+          // État d'erreur
+          <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex items-start gap-4">
+            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+            <div>
+              <h3 className="text-red-900 font-semibold mb-1">
+                Erreur lors du chargement
+              </h3>
+              <p className="text-red-700">{error}</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all"
+              >
+                Réessayer
+              </button>
+            </div>
+          </div>
+        ) : (
+          // État de succès - contenu principal avec animations améliorées
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="w-full"
+          >
+            <>
+            {/* En-tête */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              viewport={{ once: true, margin: "-100px" }}
+              className="mb-12 sm:mb-16 text-center"
+            >
           <div className="w-16 h-0.5 bg-slate-300 mx-auto mb-4 sm:mb-6"></div>
           <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight px-4 sm:px-0">Mes Projets</h1>
           <p className="text-base sm:text-lg text-black/60 max-w-3xl mx-auto leading-relaxed px-4 sm:px-6">
@@ -174,52 +230,38 @@ export function ProjectsPage() {
           <GitHubProfile variant="full" />
         </motion.div>
 
-        {/* État de chargement */}
-        {isLoading && (
-          <div className="flex flex-col items-center justify-center py-20">
-            <Loader2 className="w-12 h-12 text-slate-400 animate-spin mb-4" />
-            <p className="text-slate-600">Chargement des projets GitHub...</p>
-          </div>
-        )}
-
-        {/* État d'erreur */}
-        {error && !isLoading && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-6 flex items-start gap-4">
-            <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
-            <div>
-              <h3 className="text-red-900 font-semibold mb-1">
-                Erreur lors du chargement
-              </h3>
-              <p className="text-red-700">{error}</p>
-              <button
-                onClick={() => window.location.reload()}
-                className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all"
-              >
-                Réessayer
-              </button>
-            </div>
-          </div>
-        )}
-
         {/* État de succès : affichage des projets */}
-        {!isLoading && !error && projects.length === 0 && (
+        {projects.length === 0 ? (
           <div className="text-center py-20">
             <p className="text-slate-600 text-lg">Aucun projet public trouvé</p>
           </div>
-        )}
-
-        {!isLoading && !error && projects.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        ) : (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: { opacity: 1 }, // Garder opaque pour éviter le clignotement initial
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.05, // Animation décalée pour chaque enfant
+                  when: "beforeChildren"
+                }
+              }
+            }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6"
+          >
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 }
+                }}
                 transition={{
-                  duration: 0.5,
+                  duration: 0.4,
                   ease: [0.25, 0.1, 0.25, 1]
                 }}
-                viewport={{ once: true, margin: "-100px" }}
                 className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-[shadow,border-color] duration-300"
               >
                 {/* Titre du projet */}
@@ -267,7 +309,10 @@ export function ProjectsPage() {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
+        )}
+          </>
+          </motion.div>
         )}
       </div>
     </div>

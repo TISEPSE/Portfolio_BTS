@@ -33,7 +33,6 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
   const navigateToPage = (page: 'home' | 'projects' | 'rss') => {
     setCurrentPage(page);
     setIsOpen(false);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
