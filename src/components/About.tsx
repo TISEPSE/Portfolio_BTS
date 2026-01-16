@@ -1,25 +1,6 @@
 import { motion } from 'motion/react';
-import { Code2, Lightbulb, TrendingUp } from 'lucide-react';
 
 export function About() {
-  const features = [
-    {
-      icon: Code2,
-      title: 'Développement Full-Stack',
-      description: 'Maîtrise des technologies front-end et back-end pour créer des solutions complètes et performantes'
-    },
-    {
-      icon: Lightbulb,
-      title: 'Solutions Innovantes',
-      description: 'Créativité et innovation au service de projets qui marquent les esprits et génèrent de la valeur'
-    },
-    {
-      icon: TrendingUp,
-      title: 'Apprentissage Continu',
-      description: 'Toujours en quête de nouvelles compétences et technologies émergentes pour rester à la pointe'
-    }
-  ];
-
   return (
     // Padding vertical responsive : réduit sur mobile pour économiser l'espace vertical
     <section id="a-propos" className="py-20 sm:py-28 md:py-32 px-5 sm:px-6 bg-slate-50">
@@ -64,32 +45,6 @@ export function About() {
               projets stimulants qui repoussent les limites de la créativité et de la technologie.
             </p>
           </motion.div>
-        </div>
-
-        {/* Grid de features avec cards responsive */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 sm:gap-6 md:gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="p-6 sm:p-7 md:p-8 bg-white rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-[shadow,border-color] duration-300"
-            >
-              {/* Icône responsive avec meilleur espacement */}
-              <div className="w-14 h-14 sm:w-15 sm:h-15 md:w-16 md:h-16 bg-slate-900 rounded-xl flex items-center justify-center mb-5 sm:mb-6">
-                <feature.icon size={26} className="text-white sm:hidden md:block" strokeWidth={1.5} />
-                <feature.icon size={24} className="text-white hidden sm:block md:hidden" strokeWidth={1.5} />
-              </div>
-
-              {/* Titre responsive avec meilleur espacement */}
-              <h3 className="mb-3 sm:mb-4 text-lg sm:text-xl font-semibold tracking-tight">{feature.title}</h3>
-
-              {/* Description avec typographie plus généreuse */}
-              <p className="text-sm sm:text-base text-black/70 leading-relaxed">{feature.description}</p>
-            </motion.div>
-          ))}
         </div>
       </div>
     </section>

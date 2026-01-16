@@ -3,8 +3,8 @@ import { Menu, X, Shield } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface NavigationProps {
-  currentPage: 'home' | 'projects' | 'rss';
-  setCurrentPage: (page: 'home' | 'projects' | 'rss') => void;
+  currentPage: 'home' | 'projects' | 'bts' | 'rss';
+  setCurrentPage: (page: 'home' | 'projects' | 'bts' | 'rss') => void;
 }
 
 export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
@@ -75,10 +75,16 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
               Projets
             </button>
             <button
+              onClick={() => navigateToPage('bts')}
+              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
+            >
+              BTS
+            </button>
+            <button
               onClick={() => navigateToPage('rss')}
               className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
             >
-              Actualités
+              Veille
             </button>
           </div>
 
@@ -108,7 +114,8 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
                   { label: 'À propos', action: () => scrollToSection('a-propos') },
                   { label: 'Formations', action: () => scrollToSection('formations') },
                   { label: 'Projets', action: () => navigateToPage('projects') },
-                  { label: 'Actualités', action: () => navigateToPage('rss') }
+                  { label: 'BTS', action: () => navigateToPage('bts') },
+                  { label: 'Veille', action: () => navigateToPage('rss') }
                 ].map((item, index) => (
                   <motion.button
                     key={item.label}

@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { Navigation } from './components/Navigation';
 import { HomePage } from './components/HomePage';
 import { ProjectsPage } from './components/ProjectsPage';
+import { BTSPage } from './components/BTSPage';
 import { RSSPage } from './components/RSSPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'projects' | 'rss'>('home');
+  const [currentPage, setCurrentPage] = useState<'home' | 'projects' | 'bts' | 'rss'>('home');
 
   // Effet pour faire défiler vers le haut lorsque la page change
   useEffect(() => {
@@ -17,6 +18,7 @@ export default function App() {
       <Navigation currentPage={currentPage} setCurrentPage={setCurrentPage} />
       {currentPage === 'home' && <HomePage setCurrentPage={setCurrentPage} />}
       {currentPage === 'projects' && <ProjectsPage />}
+      {currentPage === 'bts' && <BTSPage />}
       {currentPage === 'rss' && <RSSPage />}
     </div>
   );
