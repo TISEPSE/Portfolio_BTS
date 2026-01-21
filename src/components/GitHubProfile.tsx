@@ -117,13 +117,7 @@ export function GitHubProfile({
   // VARIANTE FULL - Pour About ou section dédiée
   // ============================================================================
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
-      className="bg-white p-8 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all"
-    >
+    <div className="bg-white p-8 rounded-xl border border-slate-200 hover:border-slate-300 hover:shadow-lg transition-all">
       <div className="flex flex-col md:flex-row gap-8">
         {/* Colonne gauche : Avatar + infos */}
         <div className="flex flex-col items-center md:items-start gap-4 md:w-1/3">
@@ -261,6 +255,6 @@ export function GitHubProfile({
           )}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }

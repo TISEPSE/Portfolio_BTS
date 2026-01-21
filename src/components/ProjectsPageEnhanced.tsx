@@ -182,25 +182,21 @@ export function ProjectsPageEnhanced() {
           .filter((repo) => !repo.fork)
           .slice(0, 12);
 
-        // Enrichir les 6 premiers repos en priorité (au-dessus du fold)
-        const priorityRepos = topRepos.slice(0, 6);
-        const otherRepos = topRepos.slice(6);
+        // Créer des placeholders pour tous les repos pour éviter le reflow
+        const placeholderRepos = topRepos.map((repo) => ({
+          ...repo,
+          languageStats: [],
+          totalBytes: 0,
+        }));
 
-        // Enrichir les repos prioritaires immédiatement
-        const enrichedPriority = await Promise.all(
-          priorityRepos.map(enrichRepoWithLanguages)
+        // Afficher tous les placeholders immédiatement
+        setEnrichedRepos(placeholderRepos);
+
+        // Enrichir tous les repos en arrière-plan
+        const allEnriched = await Promise.all(
+          topRepos.map(enrichRepoWithLanguages)
         );
-
-        // Afficher les repos prioritaires tout de suite
-        setEnrichedRepos(enrichedPriority);
-
-        // Enrichir les autres repos en arrière-plan (lazy loading)
-        if (otherRepos.length > 0) {
-          const enrichedOthers = await Promise.all(
-            otherRepos.map(enrichRepoWithLanguages)
-          );
-          setEnrichedRepos([...enrichedPriority, ...enrichedOthers]);
-        }
+        setEnrichedRepos(allEnriched);
       } catch (err) {
         console.error('Erreur lors de l\'enrichissement des repos:', err);
         // Fallback : afficher les repos sans enrichissement

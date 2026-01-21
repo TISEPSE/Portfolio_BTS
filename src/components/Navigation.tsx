@@ -25,7 +25,21 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
     setTimeout(() => {
       const element = document.getElementById(sectionId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        // Centrage parfait pour "a-propos", scroll normal pour "formations"
+        if (sectionId === 'a-propos') {
+          const elementTop = element.offsetTop;
+          const elementHeight = element.offsetHeight;
+          const windowHeight = window.innerHeight;
+          const offset = elementTop - (windowHeight / 2) + (elementHeight / 2);
+          
+          window.scrollTo({
+            top: offset,
+            behavior: 'smooth'
+          });
+        } else {
+          // Scroll normal pour les autres sections (formations, accueil)
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
       }
     }, 100);
   };
@@ -33,6 +47,10 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
   const navigateToPage = (page: 'home' | 'projects' | 'rss') => {
     setCurrentPage(page);
     setIsOpen(false);
+    // Scroll en haut pour toutes les pages
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, 100);
   };
 
   return (
@@ -102,10 +120,21 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
         <AnimatePresence>
           {isOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.1, 0.25, 1] }}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                hidden: { opacity: 0, height: 0 },
+                visible: { 
+                  opacity: 1, 
+                  height: 'auto',
+                  transition: {
+                    staggerChildren: 0.04,
+                    when: "beforeChildren"
+                  }
+                }
+              }}
+              transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
               className="md:hidden overflow-hidden"
             >
               <div className="pt-5 pb-3 flex flex-col gap-1">
@@ -119,11 +148,12 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
                 ].map((item, index) => (
                   <motion.button
                     key={item.label}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    variants={{
+                      hidden: { opacity: 0, x: -15 },
+                      visible: { opacity: 1, x: 0 }
+                    }}
                     transition={{
-                      duration: 0.3,
-                      delay: index * 0.05,
+                      duration: 0.25,
                       ease: [0.25, 0.1, 0.25, 1]
                     }}
                     onClick={item.action}

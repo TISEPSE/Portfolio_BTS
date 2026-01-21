@@ -258,19 +258,18 @@ export function RSSPage() {
 
           {/* Liste des articles */}
           {!isLoading && !error && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="space-y-4 sm:space-y-5"
-            >
+            <div className="space-y-4 sm:space-y-5">
               {filteredArticles.map((article, index) => (
                 <motion.article
                   key={`${article.link}-${index}`}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.05 }}
-                  className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-all"
+                  transition={{ 
+                    duration: 0.5, 
+                    delay: 0.2 + (index * 0.08),
+                    ease: [0.25, 0.1, 0.25, 1] 
+                  }}
+                  className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md"
                 >
                   <div className="flex items-start justify-between gap-3 sm:gap-4 mb-3">
                     <h3 className="flex-1 text-base sm:text-lg font-semibold leading-snug">
@@ -303,7 +302,7 @@ export function RSSPage() {
                   </a>
                 </motion.article>
               ))}
-            </motion.div>
+            </div>
           )}
 
           {/* Message si aucun article */}

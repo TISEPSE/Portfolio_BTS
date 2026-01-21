@@ -236,33 +236,19 @@ export function ProjectsPage() {
             <p className="text-slate-600 text-lg">Aucun projet public trouvé</p>
           </div>
         ) : (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: { opacity: 1 }, // Garder opaque pour éviter le clignotement initial
-              visible: {
-                opacity: 1,
-                transition: {
-                  staggerChildren: 0.05, // Animation décalée pour chaque enfant
-                  when: "beforeChildren"
-                }
-              }
-            }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6"
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
             {projects.map((project, index) => (
               <motion.div
                 key={project.id}
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 }
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.5, 
+                  delay: index * 0.1,
+                  ease: [0.25, 0.1, 0.25, 1] 
                 }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.25, 0.1, 0.25, 1]
-                }}
-                className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md transition-[shadow,border-color] duration-300"
+                viewport={{ once: true, margin: "-100px" }}
+                className="bg-white p-5 sm:p-6 rounded-lg border border-slate-200 hover:border-slate-300 hover:shadow-md"
               >
                 {/* Titre du projet */}
                 <h3 className="mb-3 font-semibold text-lg sm:text-xl">{project.title}</h3>
@@ -309,7 +295,7 @@ export function ProjectsPage() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
         )}
           </>
           </motion.div>

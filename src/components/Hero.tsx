@@ -12,7 +12,16 @@ export function Hero({ setCurrentPage }: HeroProps) {
   const scrollToAbout = () => {
     const element = document.getElementById('a-propos');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Calcul du centering parfait
+      const elementTop = element.offsetTop;
+      const elementHeight = element.offsetHeight;
+      const windowHeight = window.innerHeight;
+      const offset = elementTop - (windowHeight / 2) + (elementHeight / 2);
+      
+      window.scrollTo({
+        top: offset,
+        behavior: 'smooth'
+      });
     }
   };
 

@@ -5,3 +5,7 @@ build
 # Variables d'environnement (ne pas commiter)
 .env
 .env.local
+
+# OpenCode
+.opencode
+opencode.json
