@@ -279,7 +279,7 @@ export function ProjectsPage() {
                     className="flex items-center justify-center gap-2 min-h-[44px] px-4 py-2.5 border border-slate-300 rounded-lg hover:bg-slate-900 hover:text-white hover:border-slate-900 active:scale-[0.98] transition-all text-sm sm:text-base"
                   >
                     <Github size={16} />
-                    <span>Code</span>
+                    <span>GitHub</span>
                   </a>
                   {project.demo && (
                     <a
