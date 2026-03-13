@@ -1,27 +1,19 @@
 import { motion } from 'motion/react';
 import { Github, Linkedin, Mail, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useGitHub } from '../hooks/useGitHub';
 
-interface HeroProps {
-  setCurrentPage: (page: 'home' | 'projects' | 'rss') => void;
-}
-
-export function Hero({ setCurrentPage }: HeroProps) {
+export function Hero() {
   const { user } = useGitHub();
 
   const scrollToAbout = () => {
     const element = document.getElementById('a-propos');
     if (element) {
-      // Calcul du centering parfait
       const elementTop = element.offsetTop;
       const elementHeight = element.offsetHeight;
       const windowHeight = window.innerHeight;
       const offset = elementTop - (windowHeight / 2) + (elementHeight / 2);
-      
-      window.scrollTo({
-        top: offset,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: offset, behavior: 'smooth' });
     }
   };
 
@@ -73,13 +65,13 @@ export function Hero({ setCurrentPage }: HeroProps) {
 
           {/* Boutons CTA */}
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 mb-10 sm:mb-12 px-4 sm:px-0">
-            <button
-              onClick={() => setCurrentPage('projects')}
+            <Link
+              to="/projets"
               className="group min-h-[44px] px-6 py-3.5 sm:py-3 bg-slate-900 text-white rounded-lg hover:bg-slate-800 active:scale-[0.98] transition-all flex items-center justify-center gap-2 shadow-md text-base sm:text-base"
             >
               <span>Voir mes projets</span>
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
             <button
               onClick={scrollToAbout}
               className="min-h-[44px] px-6 py-3.5 sm:py-3 bg-white border border-slate-300 rounded-lg hover:border-slate-400 hover:bg-slate-50 active:scale-[0.98] transition-all shadow-sm text-base sm:text-base"

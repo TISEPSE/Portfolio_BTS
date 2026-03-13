@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Menu, X, Shield } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-interface NavigationProps {
-  currentPage: 'home' | 'projects' | 'bts' | 'rss';
-  setCurrentPage: (page: 'home' | 'projects' | 'bts' | 'rss') => void;
-}
-
-export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
+export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,38 +18,34 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
-    setCurrentPage('home');
     setIsOpen(false);
-    setTimeout(() => {
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          if (sectionId === 'a-propos') {
+            const offset = element.offsetTop - (window.innerHeight / 2) + (element.offsetHeight / 2);
+            window.scrollTo({ top: offset, behavior: 'smooth' });
+          } else {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }, 150);
+    } else {
       const element = document.getElementById(sectionId);
       if (element) {
-        // Centrage parfait pour "a-propos", scroll normal pour "formations"
         if (sectionId === 'a-propos') {
-          const elementTop = element.offsetTop;
-          const elementHeight = element.offsetHeight;
-          const windowHeight = window.innerHeight;
-          const offset = elementTop - (windowHeight / 2) + (elementHeight / 2);
-          
-          window.scrollTo({
-            top: offset,
-            behavior: 'smooth'
-          });
+          const offset = element.offsetTop - (window.innerHeight / 2) + (element.offsetHeight / 2);
+          window.scrollTo({ top: offset, behavior: 'smooth' });
         } else {
-          // Scroll normal pour les autres sections (formations, accueil)
           element.scrollIntoView({ behavior: 'smooth' });
         }
       }
-    }, 100);
+    }
   };
 
-  const navigateToPage = (page: 'home' | 'projects' | 'rss') => {
-    setCurrentPage(page);
-    setIsOpen(false);
-    // Scroll en haut pour toutes les pages
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
-  };
+  const linkClass = "text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:bottom-[8px] after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center";
 
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -59,51 +53,33 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
     }`}>
       <div className="max-w-7xl mx-auto px-5 sm:px-6 py-3.5 sm:py-4">
         <div className="flex items-center justify-between">
-          <button
-            onClick={() => navigateToPage('home')}
+          <Link
+            to="/"
             className="text-lg sm:text-xl tracking-tight hover:opacity-70 active:scale-95 transition-all min-h-[44px] flex items-center"
           >
             Baptiste Demé
-          </button>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <button
-              onClick={() => scrollToSection('accueil')}
-              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
-            >
+            <button onClick={() => scrollToSection('accueil')} className={linkClass}>
               Accueil
             </button>
-            <button
-              onClick={() => scrollToSection('a-propos')}
-              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
-            >
+            <button onClick={() => scrollToSection('a-propos')} className={linkClass}>
               À propos
             </button>
-            <button
-              onClick={() => scrollToSection('formations')}
-              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
-            >
+            <button onClick={() => scrollToSection('formations')} className={linkClass}>
               Formations
             </button>
-            <button
-              onClick={() => navigateToPage('projects')}
-              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
-            >
+            <Link to="/projets" className={linkClass} onClick={() => setIsOpen(false)}>
               Projets
-            </button>
-            <button
-              onClick={() => navigateToPage('bts')}
-              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
-            >
+            </Link>
+            <Link to="/bts" className={linkClass} onClick={() => setIsOpen(false)}>
               BTS
-            </button>
-            <button
-              onClick={() => navigateToPage('rss')}
-              className="text-slate-900 relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-0 after:-bottom-1 after:transition-all after:duration-300 hover:after:w-full min-h-[44px] flex items-center"
-            >
+            </Link>
+            <Link to="/veille" className={linkClass} onClick={() => setIsOpen(false)}>
               Veille
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -125,13 +101,10 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
               exit="hidden"
               variants={{
                 hidden: { opacity: 0, height: 0 },
-                visible: { 
-                  opacity: 1, 
+                visible: {
+                  opacity: 1,
                   height: 'auto',
-                  transition: {
-                    staggerChildren: 0.04,
-                    when: "beforeChildren"
-                  }
+                  transition: { staggerChildren: 0.04, when: "beforeChildren" }
                 }
               }}
               transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
@@ -142,25 +115,35 @@ export function Navigation({ currentPage, setCurrentPage }: NavigationProps) {
                   { label: 'Accueil', action: () => scrollToSection('accueil') },
                   { label: 'À propos', action: () => scrollToSection('a-propos') },
                   { label: 'Formations', action: () => scrollToSection('formations') },
-                  { label: 'Projets', action: () => navigateToPage('projects') },
-                  { label: 'BTS', action: () => navigateToPage('bts') },
-                  { label: 'Veille', action: () => navigateToPage('rss') }
-                ].map((item, index) => (
+                ].map((item) => (
                   <motion.button
                     key={item.label}
-                    variants={{
-                      hidden: { opacity: 0, x: -15 },
-                      visible: { opacity: 1, x: 0 }
-                    }}
-                    transition={{
-                      duration: 0.25,
-                      ease: [0.25, 0.1, 0.25, 1]
-                    }}
+                    variants={{ hidden: { opacity: 0, x: -15 }, visible: { opacity: 1, x: 0 } }}
+                    transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     onClick={item.action}
-                    className="text-left text-base text-slate-900 min-h-[48px] px-2 flex items-center relative after:content-[''] after:absolute after:w-0 after:h-[2px] after:bg-slate-900 after:left-2 after:bottom-3 after:transition-all after:duration-300 active:after:w-[calc(100%-1rem)]"
+                    className="text-left text-base text-slate-900 min-h-[48px] px-2 flex items-center"
                   >
                     {item.label}
                   </motion.button>
+                ))}
+                {[
+                  { label: 'Projets', to: '/projets' },
+                  { label: 'BTS', to: '/bts' },
+                  { label: 'Veille', to: '/veille' },
+                ].map((item) => (
+                  <motion.div
+                    key={item.label}
+                    variants={{ hidden: { opacity: 0, x: -15 }, visible: { opacity: 1, x: 0 } }}
+                    transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
+                  >
+                    <Link
+                      to={item.to}
+                      onClick={() => setIsOpen(false)}
+                      className="text-left text-base text-slate-900 min-h-[48px] px-2 flex items-center w-full"
+                    >
+                      {item.label}
+                    </Link>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

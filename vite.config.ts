@@ -58,4 +58,8 @@
       port: 3000,
       open: true,
     },
+    preview: {
+      port: 3000,
+      allowedHosts: ['tisepse.com', 'www.tisepse.com']
+    },
   });
