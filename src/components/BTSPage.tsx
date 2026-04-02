@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { CheckCircle2, Clock, XCircle, Download } from 'lucide-react';
 import { Footer } from './Footer';
 
 type NiveauType = 'maitrise' | 'en_cours' | 'non_maitrise';
@@ -184,7 +184,16 @@ export function BTSPage() {
               Compétences BTS SIO
             </h1>
             <p className="text-base sm:text-lg text-black/50 max-w-2xl mx-auto px-4 sm:px-6">
-              Tableau de synthèse des compétences acquises durant ma formation
+              <a
+                href="/BTS_SIO_Annexe_6_Epreuve E5 - Tableau de synthe_se_2026.xlsx"
+                download
+                className="group inline-flex items-center gap-1.5 hover:text-slate-700 transition-colors duration-200"
+                title="Télécharger le tableau de synthèse"
+              >
+                Tableau de synthèse
+                <Download size={15} className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-slate-500" />
+              </a>
+              {' '}des compétences acquises durant ma formation
             </p>
           </motion.div>
 
