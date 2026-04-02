@@ -28,8 +28,16 @@ export function BTSPage() {
       description: 'Application web de prise de rendez-vous en ligne (React, Flask, PostgreSQL, Docker)'
     },
     portfolio: {
-      nom: 'Portfolio personnel',
+      nom: 'Portfolio_BTS',
       description: 'Site vitrine présentant mes compétences, projets et veille technologique'
+    },
+    tp: {
+      nom: 'Scanner de port en Flask',
+      description: 'Application web de scan de ports réseau développée avec Flask (Python)'
+    },
+    docBBC: {
+      nom: 'Documentation-BBC',
+      description: 'Documentation technique et utilisateur du projet Book-By-Click'
     }
   };
 
@@ -40,38 +48,38 @@ export function BTSPage() {
         {
           libelle: 'Gérer le patrimoine informatique',
           niveau: 'maitrise',
-          projet: projets.bookByClick,
-          justification: 'Utilisation de GLPI pour la gestion du parc informatique, GitHub pour le versionnage et Docker pour la gestion des conteneurs (actifs numériques).'
+          projet: projets.tp,
+          justification: "Gestion du parc via GLPI, versionnage avec GitHub et conteneurisation Docker. Administration de machines virtuelles sous VirtualBox avec Windows Server (Active Directory) et Linux, représentant deux serveurs sur systèmes d'exploitation différents."
         },
         {
           libelle: "Répondre aux incidents et aux demandes d'assistance",
           niveau: 'maitrise',
-          projet: projets.bookByClick,
-          justification: "Gestion rigoureuse des incidents via GitHub : historique Git propre, plusieurs branches de développement et suivi des corrections de dysfonctionnements."
+          projet: projets.tp,
+          justification: "Suivi et résolution des incidents via GLPI et GitHub (branches, historique Git). Utilisation de Wireshark pour l'analyse réseau lors de dysfonctionnements."
         },
         {
           libelle: "Développer la présence en ligne de l'organisation",
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: "Réalisation d'un site web complet pour la prise de rendez-vous en ligne."
+          justification: "Développement et déploiement de Book-By-Click, accessible via un reverse proxy NGINX sécurisé en HTTPS depuis un VPS, sur PC et smartphone."
         },
         {
           libelle: 'Travailler en mode projet',
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: "Réalisation effectuée en équipe avec une analyse des besoins (Use Cases) et une planification via Git."
+          justification: "Réalisation en équipe avec analyse des besoins (Use Cases) et planification via GitHub. Environnement de travail collaboratif basé sur Git pour le suivi des versions et des branches."
         },
         {
           libelle: 'Mettre à disposition des utilisateurs un service',
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: 'Déploiement sur un VPS, documentation utilisateur et technique accessible en ligne.'
+          justification: "Déploiement sur VPS derrière NGINX (HTTPS), testé sur PC et smartphone. Documentation utilisateur et technique accessible en ligne."
         },
         {
           libelle: 'Organiser son développement professionnel',
           niveau: 'maitrise',
           projet: projets.portfolio,
-          justification: "Mise en place d'une veille technologique accessible sur le portfolio et intégration d'un formulaire de contact sur l'application pour recueillir les retours utilisateurs."
+          justification: "Veille technologique accessible sur le portfolio et formulaire de contact pour recueillir les retours. Montée en compétences continue via des TP sur Linux, Active Directory et les environnements virtualisés (VirtualBox)."
         }
       ]
     },
@@ -82,19 +90,19 @@ export function BTSPage() {
           libelle: 'Concevoir et développer une solution applicative',
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: 'Utilisation de React 19, Flask (API REST), architecture 3-tiers et environnement Docker.'
+          justification: "Développement de Book-By-Click avec React 19 (frontend), Flask API REST (backend), architecture 3-tiers, PostgreSQL et Docker. Application responsive testée sur PC et smartphone."
         },
         {
           libelle: 'Assurer la maintenance corrective ou évolutive',
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: 'Précisé comme compétence travaillée ; gestion des versions et migrations de base de données.'
+          justification: "Gestion des versions via Git et migrations de base de données avec Alembic (scripts Python). Suivi des évolutions et corrections via les branches GitHub."
         },
         {
           libelle: 'Gérer les données',
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: "Conception de la base de données (MCD/MLD), utilisation de PostgreSQL 15 et de l'ORM SQLAlchemy."
+          justification: "Conception de la base de données (MCD/MLD), utilisation de PostgreSQL 15 et de l'ORM SQLAlchemy. Migrations assurées par Alembic pour garantir la cohérence des données lors des évolutions."
         }
       ]
     },
@@ -105,31 +113,31 @@ export function BTSPage() {
           libelle: 'Protéger les données à caractère personnel',
           niveau: 'maitrise',
           projet: projets.bookByClick,
-          justification: "Mise en place d'un contrôle d'accès basé sur la séparation des rôles (Admin, Pro, Client)."
+          justification: "Contrôle d'accès basé sur la séparation des rôles (Admin, Pro, Client). Les ressources sont sécurisées et soumises à habilitation selon le profil utilisateur."
         },
         {
           libelle: "Préserver l'identité numérique de l'organisation",
           niveau: 'maitrise',
           projet: projets.portfolio,
-          justification: 'Documentation professionnelle centralisée et utilisation de dépôts publics structurés.'
+          justification: "Documentation professionnelle centralisée, dépôts publics structurés sur GitHub et déploiement sécurisé via NGINX/HTTPS pour préserver l'image numérique du projet."
         },
         {
           libelle: 'Sécuriser les équipements et les usages des utilisateurs',
           niveau: 'maitrise',
-          projet: projets.bookByClick,
-          justification: 'Gestion des sessions via JWT et hachage des mots de passe (sécurité native).'
+          projet: projets.tp,
+          justification: "Authentification via Active Directory (TP Windows Server) et JWT dans Book-By-Click. Mots de passe hachés (bcrypt), sessions sécurisées et environnements de TP isolés sous VirtualBox."
         },
         {
           libelle: "Garantir la disponibilité, l'intégrité et la confidentialité",
           niveau: 'maitrise',
-          projet: projets.bookByClick,
-          justification: "Isolation par Docker, utilisation de SQLAlchemy pour sécuriser les requêtes et traçabilité des échanges par e-mail."
+          projet: projets.tp,
+          justification: "Sécurisation des requêtes via SQLAlchemy, sauvegarde par scripts Python/Alembic et chiffrement des communications HTTPS (NGINX). Analyse du trafic réseau avec Wireshark."
         },
         {
           libelle: "Assurer la cybersécurité d'une solution applicative",
           niveau: 'maitrise',
-          projet: projets.bookByClick,
-          justification: "Intégration de la sécurité dès la conception : authentification robuste et validation des données."
+          projet: projets.tp,
+          justification: "Sécurité intégrée dès la conception : authentification JWT, validation des données, chiffrement HTTPS, analyse du trafic avec Wireshark et séparation des rôles applicatifs."
         }
       ]
     }
